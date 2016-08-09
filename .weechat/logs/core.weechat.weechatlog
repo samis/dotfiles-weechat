@@ -1,0 +1,27 @@
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 27: unknown option for section "look": highlight_tags = "irc_privmsg,irc_notice"
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 28: unknown option for section "look": item_away_message = on
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 29: unknown option for section "look": item_channel_modes_hide_key = off
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 36: unknown option for section "look": nick_color_force = ""
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 37: unknown option for section "look": nick_color_hash = sum
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 38: unknown option for section "look": nick_color_stop_chars = "_|["
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 63: unknown option for section "color": item_away = yellow
+2016-08-10 00:45:18	=!=	Warning: /home/samis/.weechat/irc.conf, line 77: unknown option for section "network": alternate_nick = on
+2016-08-10 00:45:18		tcl scripts loaded: rnotify
+2016-08-10 00:45:18		cron: 0 job loaded from "/home/samis/.weechat/cron.txt"
+2016-08-10 00:45:18	=!=	python: warning, license "WTFPL" for script "prism" differs from plugin license ("GPL3")
+2016-08-10 00:45:19		URL server listening on ('192.168.0.9', 43639)
+2016-08-10 00:45:19		python scripts loaded: apply_corrections, colorize_nicks, cron, leet, prism, purgelogs, shell, uname, upside_down, urlserver, zerotab
+2016-08-10 00:45:19	=!=	perl: warning, license "Public domain" for script "kernel" differs from plugin license ("GPL3")
+2016-08-10 00:45:19	perl	warning: length() used on @lines (did you mean "scalar(@lines)"?) at /home/samis/.weechat/perl/autoload/rslap.pl line 104.
+2016-08-10 00:45:19		perl scripts loaded: buffers, chanmon, color_popup, highmon, iset, kernel, kickban, multiline, perlexec, rslap, sysinfo, topicsed, unset_unused
+2016-08-10 00:45:19		lua scripts loaded: text_effects
+2016-08-10 00:45:19	=!=	Warning: /home/samis/.weechat/script.conf, line 46: unknown option for section "scripts": dir = "%h/script"
+2016-08-10 00:45:19		script: 264 scripts for WeeChat 1.5
+2016-08-10 00:45:19		Plugins loaded: alias, charset, exec, fifo, irc, logger, lua, perl, python, relay, ruby, script, tcl, trigger, xfer
+2016-08-10 00:48:09		lua: scripts unloaded
+2016-08-10 00:48:09		Chanmon buffer has been closed but output is still set to buffer, unusual results may occur. To recreate the buffer use /chanmon fix
+2016-08-10 00:48:09		Highmon buffer has been closed but output is still set to buffer, unusual results may occur. To recreate the buffer use /highmon fix
+2016-08-10 00:48:09		perl: scripts unloaded
+2016-08-10 00:48:09		URL server stopped
+2016-08-10 00:48:09		python: scripts unloaded
+2016-08-10 00:48:09		tcl: scripts unloaded
