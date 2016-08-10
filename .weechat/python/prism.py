@@ -8,6 +8,10 @@
 # TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 #
 # 0. You just DO WHAT THE FUCK YOU WANT TO.
+# 2015-11-16, wowaname <wowaname@volatile.ch>
+#    v0.2.9, 0.2.10: wrote an actual parser rather than regex
+# 2014-09-03, Matthew Martin <phy1729@gmail.com>
+#    v0.2.8: add color reset to the end of the output
 # 2013-11-26, Seganku <seganku@zenu.net>
 #    v0.2.7: add -c switch for the option to pass output to a command
 # 2013-07-19, Sebastien Helleu <flashcode@flashtux.org>
@@ -30,7 +34,7 @@ import re
 
 SCRIPT_NAME    = "prism"
 SCRIPT_AUTHOR  = "Alex Barrett <al.barrett@gmail.com>"
-SCRIPT_VERSION = "0.2.7"
+SCRIPT_VERSION = "0.2.10"
 SCRIPT_LICENSE = "WTFPL"
 SCRIPT_DESC    = "Taste the rainbow."
 
@@ -77,32 +81,29 @@ def prism_cmd_cb(data, buffer, args):
     input = args.decode("UTF-8")
     input_method = "command"
 
-    if not input:
-        input = w.buffer_get_string(buffer, "input")
+    if not input or (input[0] == '-' and input.find(' ') == -1):
+        input = (input + ' ' if input else '') + w.buffer_get_string(buffer, "input")
         input = input.decode("UTF-8")
         input_method = "keybinding"
 
-    # select a tokenizer and increment mode
-    regex = regex_chars
-    inc   = 1
-    bs    = 0
-    cmd   = ""
-    m = re.match(r'(-[rwmbec]+)\s+(?:([^ ]+)\s+(.+?)\s*\2)?(.*)', input)
-    if m and input_method == "command":
-        opts = m.group(1)
-        input = m.group(4)
-        if 'c' in opts:
-            cmd = m.group(3)
-        if 'w' in opts:
-            regex = regex_words
-        if 'r' in opts:
-            inc = 0
-        if 'm' in opts:
-            cmd = "/me"
-        if 'b' in opts:
-            input = input[::-1]
-        if 'e' in opts:
-             bs = 1
+    if not input:
+        return w.WEECHAT_RC_OK
+
+    optstop = input and input[0] == '-' and input.find(' ')
+    opts = input[1:optstop] if optstop else ''
+    cmdstop = 'c' in opts and input.find(' ', optstop+1)
+    cmd = ''
+    if 'm' in opts: cmd = '/me '
+    if 'c' in opts:
+        find = input[optstop+1:cmdstop]
+        where = input.find(find, cmdstop+1)
+        cmd = input[cmdstop+1:where]
+        input = input[where+len(find):]
+    else: input = input[optstop+bool(optstop):]
+    regex = regex_words if 'w' in opts else regex_chars
+    inc = 'r' not in opts
+    bs = 'e' in opts
+    input = input[::-1] if 'b' in opts else input
 
     output = u""
     tokens = re.findall(regex, input)
@@ -120,6 +121,7 @@ def prism_cmd_cb(data, buffer, args):
             color_index += random.randint(1, color_count - 1)
         else:
             color_index += inc
+    output += u'\x0f'
 
     # output starting with a / will be executed as a
     # command unless we escape it with a preceding /
@@ -127,7 +129,7 @@ def prism_cmd_cb(data, buffer, args):
     if len(output) > 0 and output[0] == "/":
         output = "/" + output
     if len(cmd) > 0:
-        output = cmd + ' ' + output
+        output = cmd + output
     if input_method == "keybinding":
         w.buffer_set(buffer, "input", output.encode("UTF-8"))
     else:
